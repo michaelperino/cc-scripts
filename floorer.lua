@@ -8,11 +8,18 @@ items[2] = "rechiseled:glowstone_smooth"
 turn = "right"
 dig = true
 
-function item_RS_request(item, slotty, amount)
+h = peripheral.wrap("right")
+if h ~= nil then
+    turtle.select(14)
+    turtle.equipRight()
+end
+
+function item_RS_request(item, amount, slotty)
     turtle.select(14)
     turtle.digUp()
     turtle.equipRight()
-    request = string.format("%04d %s",62 - turtle.getItemCount(slotty),item)
+    request = string.format("%04d %s",amount,item)
+    print(request)
     reccy = -1
     rednet.open("right")
     rednet.broadcast(request)
@@ -21,6 +28,7 @@ function item_RS_request(item, slotty, amount)
         if s == nil then
             rednet.broadcast(request)
         else
+            print(m)
             reccy = tonumber(string.sub(m,1,5))
         end
     end
@@ -43,8 +51,8 @@ end
 
 function refuel()
     if turtle.getFuelLevel() < 6000 then
-        item_RS_request("minecraft:coal",12,40)
-        turtel.select(12)
+        item_RS_request("minecraft:coal",40,12)
+        turtle.select(12)
         turtle.refuel(40)
     end
 end
