@@ -1,0 +1,28 @@
+rednet.open("bottom")
+storage = peripheral.wrap("left")
+while true do
+    s,m,p = rednet.receive()
+    sleep(0.2)
+    if string.len(m) > 6 then
+        num_req = tonumber(string.sub(m,1,5))
+        print(num_req)
+        item_req = {}
+        item_req.name = string.sub(m,6)
+        print(item_req.name)
+        item_stor = storage.getItem(item_req)
+        if item_stor ~= nil then
+            redstone.setOutput("top",true)
+            item_stor.count = num_req
+            print(item_stor.amount)
+            storage.craftItem({name=item_req.name,count=num_req})
+            v,a = storage.exportItem({name=item_req.name,count=num_req},"up")
+            rednet.broadcast(string.format("%04d %04d", s, v))
+            sleep(1.5)
+            redstone.setOutput("top",false)
+            sleep(6)
+            --storage.importItem({name=item_req.name,count=64},"up")
+        end
+    end
+end
+    
+    
