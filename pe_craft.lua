@@ -5,11 +5,18 @@ recipes[curr_rec] = {}
 recipes[curr_rec]["projecte:dark_matter_block"] = 1
 recipes[curr_rec]["projecte:red_matter_block"] = 1
 recipes[curr_rec]["projecte:alchemical_chest"] = 1
-recipes[curr_rec]["iron_chest:dirt_chest"] = 1
-recipes[curr_rec]["iron_chest:crystal_chest"] = 1
+recipes[curr_rec]["ironchest:dirt_chest"] = 1
+recipes[curr_rec]["ironchest:crystal_chest"] = 1
 curr_rec = "projecte:collector_mk1"
 recipes[curr_rec] = {}
 recipes[curr_rec]["minecraft:glowstone"] = 2
+recipes[curr_rec]["minecraft:diamond_block"] = 1
+recipes[curr_rec]["minecraft:furnace"] = 1
+recipes[curr_rec]["minecraft:glass"] = 1
+recipes[curr_rec]["projecte:alchemical_chest"] = 1
+curr_rec = "projecte:relay_mk1"
+recipes[curr_rec] = {}
+recipes[curr_rec]["minecraft:obsidian"] = 2
 recipes[curr_rec]["minecraft:diamond_block"] = 1
 recipes[curr_rec]["minecraft:furnace"] = 1
 recipes[curr_rec]["minecraft:glass"] = 1
@@ -19,11 +26,21 @@ recipes[curr_rec] = {}
 recipes[curr_rec]["minecraft:glowstone"] = 4
 recipes[curr_rec]["projecte:dark_matter"] = 1
 recipes[curr_rec]["projecte:collector_mk1"] = 1
+curr_rec = "projecte:relay_mk2"
+recipes[curr_rec] = {}
+recipes[curr_rec]["minecraft:obsidian"] = 4
+recipes[curr_rec]["projecte:dark_matter"] = 1
+recipes[curr_rec]["projecte:relay_mk1"] = 1
 curr_rec = "projecte:collector_mk3"
 recipes[curr_rec] = {}
 recipes[curr_rec]["minecraft:glowstone"] = 4
 recipes[curr_rec]["projecte:red_matter"] = 1
 recipes[curr_rec]["projecte:collector_mk2"] = 1
+curr_rec = "projecte:relay_mk3"
+recipes[curr_rec] = {}
+recipes[curr_rec]["minecraft:obsidian"] = 4
+recipes[curr_rec]["projecte:red_matter"] = 1
+recipes[curr_rec]["projecte:relay_mk2"] = 1
 curr_rec = "projecte:low_covalence_dust"
 recipes[curr_rec] = {}
 recipes[curr_rec]["ftbstoneblock:2x_compressed_cobblestone"] = 1
@@ -107,7 +124,7 @@ while true do
                         total_out = v_out
                         if total_out ~= v then
                             print("ITEM ERROR, ATTEMPTING TO EXPORT, PLEASE GO PUT THE ITEM IN AS NEEDED")
-                            print(string.format("%s %d INSERTED OF %d",k1,))
+                            print(string.format("%s %d INSERTED OF %d",k1,total_out,v))
                             while total_out < v do
                                 v_out,a = storage.exportItem({name=k1,count=v - total_out},"east")
                                 total_out = total_out + v_out
