@@ -49,6 +49,8 @@ while true do
                     if item ~= nil then
                         if item.amount < v then
                             storage.craftItem({name=k1,count=v-item.amount})
+                        elseif v == 1 then
+                            storage.craftItem({name=k1,count=1})
                         end
                     end
                 end
@@ -70,6 +72,20 @@ while true do
                             temp_to_export = temp_to_export - 1
                         end]]--
                         v_out,a = storage.exportItem({name=k1,count=v},"east")
+                        if v_out ~= 1 then
+                            valid = false
+                            break
+                        end
+                    end
+                    if valid == false then
+                        for k1,v in pairs(recipes[k]) do
+                            --[[temp_to_export = v
+                            while temp_to_export > 0 do
+                                v,a = storage.exportItem({name=k1,count=1},"east")
+                                temp_to_export = temp_to_export - 1
+                            end]]--
+                            v_out,a = storage.importItem({name=k1,count=v},"east")
+                        end
                     end
                 end
             end
