@@ -10,7 +10,6 @@ recipes[curr_rec]["projecte:alchemical_chest"] = 1
 curr_rec = "projecte:collector_mk2"
 recipes[curr_rec] = {}
 recipes[curr_rec]["minecraft:glowstone"] = 4
-recipes[curr_rec]["minecraft:diamond_block"] = 1
 recipes[curr_rec]["projecte:dark_matter"] = 1
 recipes[curr_rec]["projecte:collector_mk1"] = 1
 
@@ -23,7 +22,7 @@ end
 
 while true do
     for k,v in pairs(all_items) do
-        print(string.formate("%d : %s",k,v))
+        print(string.format("%d : %s",k,v))
     end
     chosen_rec = tonumber(read())
     chosen_rec = all_items[chosen_rec]
