@@ -51,7 +51,6 @@ while true do
                         end
                     end
                 end
-                sleep(5)
                 valid = true
                 for k1,v in pairs(recipes[k]) do
                     item = storage.getItem({name=k1})
@@ -65,13 +64,17 @@ while true do
                 end
                 if valid then
                     for k1,v in pairs(recipes[k]) do
-                        v,a = storage.exportItem({name=k1,count=v},"east")
+                        temp_to_export = v
+                        while temp_to_export > 0 do
+                            v,a = storage.exportItem({name=k1,count=1},"east")
+                            temp_to_export = temp_to_export - 1
+                        end
                     end
                 end
             end
         end
         while redstone.getInput("back") do
-            sleep(0.1)
+            sleep(0.03)
         end
         quantity = quantity - 1
     end
