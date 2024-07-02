@@ -15,11 +15,11 @@ recipes[curr_rec]["projecte:collector_mk1"] = 1
 curr_rec = "projecte:low_covalence_dust"
 recipes[curr_rec] = {}
 recipes[curr_rec]["ftbstoneblock:2x_compressed_cobblestone"] = 1
-recipes[curr_rec]["minecraft:redstone"] = 1
+recipes[curr_rec]["minecraft:redstone"] = 4
 curr_rec = "projecte:medium_covalence_dust"
 recipes[curr_rec] = {}
 recipes[curr_rec]["ftbstoneblock:2x_compressed_cobblestone"] = 1
-recipes[curr_rec]["minecraft:redstone"] = 1
+recipes[curr_rec]["minecraft:redstone"] = 4
 curr_rec = "projecte:high_covalence_dust"
 recipes[curr_rec] = {}
 recipes[curr_rec]["minecraft:coal"] = 4
@@ -64,11 +64,12 @@ while true do
                 end
                 if valid then
                     for k1,v in pairs(recipes[k]) do
-                        temp_to_export = v
+                        --[[temp_to_export = v
                         while temp_to_export > 0 do
                             v,a = storage.exportItem({name=k1,count=1},"east")
                             temp_to_export = temp_to_export - 1
-                        end
+                        end]]--
+                        v_out,a = storage.exportItem({name=k1,count=v},"east")
                     end
                 end
             end
