@@ -41,6 +41,7 @@ while true do
     print("quantity?")
     quantity = tonumber(read())
     while quantity > 0 do
+        valid = true
         for k,v00 in pairs(recipes) do
             if k == chosen_rec then
                 for k1,v in pairs(recipes[k]) do
@@ -51,7 +52,6 @@ while true do
                         end
                     end
                 end
-                valid = true
                 for k1,v in pairs(recipes[k]) do
                     item = storage.getItem({name=k1})
                     if item == nil then
@@ -74,10 +74,13 @@ while true do
                 end
             end
         end
-        while redstone.getInput("back") do
-            sleep(0.03)
-        end
-        sleep(0.1)
+        if valid then:
+            while redstone.getInput("back") do
+                sleep(0.03)
+            end
+            sleep(0.25)
+        else:
+            sleep(5)
         quantity = quantity - 1
     end
 end
