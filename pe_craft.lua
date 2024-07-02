@@ -71,20 +71,17 @@ while true do
                             v,a = storage.exportItem({name=k1,count=1},"east")
                             temp_to_export = temp_to_export - 1
                         end]]--
+                        total_out = 0
                         v_out,a = storage.exportItem({name=k1,count=v},"east")
-                        if v_out ~= 1 then
-                            valid = false
-                            break
-                        end
-                    end
-                    if valid == false then
-                        for k1,v in pairs(recipes[k]) do
-                            --[[temp_to_export = v
-                            while temp_to_export > 0 do
-                                v,a = storage.exportItem({name=k1,count=1},"east")
-                                temp_to_export = temp_to_export - 1
-                            end]]--
-                            v_out,a = storage.importItem({name=k1,count=v},"east")
+                        total_out = v_out
+                        if total_out ~= v then
+                            print("ITEM ERROR, ATTEMPTING TO EXPORT, PLEASE GO PUT THE ITEM IN AS NEEDED")
+                            print(string.format("%s %d INSERTED OF %d",k1,))
+                            while total_out < v do
+                                v_out,a = storage.exportItem({name=k1,count=v - total_out},"east")
+                                total_out = total_out + v_out
+                                sleep(1)
+                            end
                         end
                     end
                 end
