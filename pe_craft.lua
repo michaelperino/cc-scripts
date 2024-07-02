@@ -74,13 +74,14 @@ while true do
                 end
             end
         end
-        if valid then:
+        if valid then
             while redstone.getInput("back") do
                 sleep(0.03)
             end
             sleep(0.25)
-        else:
+        else
             sleep(5)
+        end
         quantity = quantity - 1
     end
 end
