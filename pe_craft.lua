@@ -77,6 +77,7 @@ while true do
         while redstone.getInput("back") do
             sleep(0.03)
         end
+        sleep(0.1)
         quantity = quantity - 1
     end
 end
