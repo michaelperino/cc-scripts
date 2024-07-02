@@ -12,6 +12,18 @@ recipes[curr_rec] = {}
 recipes[curr_rec]["minecraft:glowstone"] = 4
 recipes[curr_rec]["projecte:dark_matter"] = 1
 recipes[curr_rec]["projecte:collector_mk1"] = 1
+curr_rec = "projecte:low_covalence_dust"
+recipes[curr_rec] = {}
+recipes[curr_rec]["ftbstoneblock:2x_compressed_cobblestone"] = 1
+recipes[curr_rec]["minecraft:redstone"] = 1
+curr_rec = "projecte:medium_covalence_dust"
+recipes[curr_rec] = {}
+recipes[curr_rec]["ftbstoneblock:2x_compressed_cobblestone"] = 1
+recipes[curr_rec]["minecraft:redstone"] = 1
+curr_rec = "projecte:high_covalence_dust"
+recipes[curr_rec] = {}
+recipes[curr_rec]["minecraft:coal"] = 4
+recipes[curr_rec]["minecraft:diamond"] = 1
 
 all_items = {}
 MAX_C = 1
@@ -26,33 +38,41 @@ while true do
     end
     chosen_rec = tonumber(read())
     chosen_rec = all_items[chosen_rec]
-    for k,v00 in pairs(recipes) do
-        if k == chosen_rec then
-            for k1,v in pairs(recipes[k]) do
-                item = storage.getItem({name=k1})
-                if item ~= nil then
-                    if item.amount < v then
-                        storage.craftItem({name=k1,count=v-item.amount})
+    print("quantity?")
+    quantity = tonumber(read())
+    while quantity > 0 do
+        for k,v00 in pairs(recipes) do
+            if k == chosen_rec then
+                for k1,v in pairs(recipes[k]) do
+                    item = storage.getItem({name=k1})
+                    if item ~= nil then
+                        if item.amount < v then
+                            storage.craftItem({name=k1,count=v-item.amount})
+                        end
+                    end
+                end
+                sleep(5)
+                valid = true
+                for k1,v in pairs(recipes[k]) do
+                    item = storage.getItem({name=k1})
+                    if item == nil then
+                        print(string.format("ITEM MISSING: %s, NEED %d", k1, v))
+                        valid = false
+                    elseif storage.getItem({name=k1}).amount < v then
+                        print(string.format("MISSING SOME %s, ONLY HAVE %d of %d",k1,storage.getItem({name=k1}).amount,v))
+                        valid = false
+                    end
+                end
+                if valid then
+                    for k1,v in pairs(recipes[k]) do
+                        v,a = storage.exportItem({name=k1,count=v},"east")
                     end
                 end
             end
-            sleep(5)
-            valid = true
-            for k1,v in pairs(recipes[k]) do
-                item = storage.getItem({name=k1})
-                if item == nil then
-                    print(string.format("ITEM MISSING: %s, NEED %d", k1, v))
-                    valid = false
-                elseif storage.getItem({name=k1}).amount < v then
-                    print(string.format("MISSING SOME %s, ONLY HAVE %d of %d",k1,storage.getItem({name=k1}).amount,v))
-                    valid = false
-                end
-            end
-            if valid then
-                for k1,v in pairs(recipes[k]) do
-                    v,a = storage.exportItem({name=k1,count=v},"east")
-                end
-            end
         end
+        while redstone.getInput("back") do
+            sleep(0.1)
+        end
+        quantity = quantity - 1
     end
 end
