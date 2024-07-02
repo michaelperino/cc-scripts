@@ -23,22 +23,27 @@ end
 
 while true do
     for k,v in pairs(all_items) do
-        print("%d : %s",k,v)
+        print(string.formate("%d : %s",k,v))
     end
-    chosen_rec = tonumber(input())
+    chosen_rec = tonumber(read())
     chosen_rec = all_items[chosen_rec]
     for k,v00 in pairs(recipes) do
         if k == chosen_rec then
             for k1,v in pairs(recipes[k]) do
-                storage.craftItem({name=k1,count=v})
+                item = storage.getItem({name=k1})
+                if item ~= nil then
+                    if item.amount < v then
+                        storage.craftItem({name=k1,count=v-item.amount})
+                    end
+                end
             end
             sleep(5)
             for k1,v in pairs(recipes[k]) do
                 item = storage.getItem({name=k1})
                 if item == nil then
-                    print("ITEM MISSING: %s, NEED %d", k1, v)
+                    print(string.format("ITEM MISSING: %s, NEED %d", k1, v))
                 elseif storage.getItem({name=k1}).amount < v then
-                    print("MISSING SOME %s, ONLY HAVE %d of %d",k1,storage.getItem({name=k1}).amount,v)
+                    print(string.format("MISSING SOME %s, ONLY HAVE %d of %d",k1,storage.getItem({name=k1}).amount,v))
                 end
             end
             for k1,v in pairs(recipes[k]) do
