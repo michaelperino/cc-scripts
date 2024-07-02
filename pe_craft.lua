@@ -1,31 +1,44 @@
-p = peripheral.find("rsBridge")
+storage = peripheral.find("rsBridge")
 recipes = {}
 curr_rec = "projecte:collector_mk1"
-recipes[curr_rec] = []
+recipes[curr_rec] = {}
 recipes[curr_rec]["minecraft:glowstone"] = 2
 recipes[curr_rec]["minecraft:diamond_block"] = 1
 recipes[curr_rec]["minecraft:furnace"] = 1
 recipes[curr_rec]["minecraft:glass"] = 1
 recipes[curr_rec]["projecte:alchemcial_chest"] = 1
 curr_rec = "projecte:collector_mk2"
-recipes[curr_rec] = []
+recipes[curr_rec] = {}
 recipes[curr_rec]["minecraft:glowstone"] = 4
 recipes[curr_rec]["minecraft:diamond_block"] = 1
 recipes[curr_rec]["projecte:dark_matter"] = 1
 recipes[curr_rec]["projecte:collector_mk1"] = 1
 
+all_items = {}
+MAX_C = 1
+for k,v in pairs(recipes) do
+    all_items[MAX_C] = k
+    MAX_C = MAX_C + 1
+end
 
 while true do
-    chosen_rec = input()
+    for k,v in pairs(all_items) do
+        print("%d : %s",k,v)
+    end
+    chosen_rec = tonumber(input())
+    chosen_rec = all_items[chosen_rec]
     for k,v00 in pairs(recipes) do
-        if k == chosen_rec do
+        if k == chosen_rec then
             for k1,v in pairs(recipes[k]) do
                 storage.craftItem({name=k1,count=v})
             end
             sleep(5)
             for k1,v in pairs(recipes[k]) do
-                if storage.getItem({name=k1}).amount < v then
-                    print("MISSING %s, ONLY HAVE %d of %d",k,storage.getItem({name=k1}).amount,v)
+                item = storage.getItem({name=k1})
+                if item == nil then
+                    print("ITEM MISSING: %s, NEED %d", k1, v)
+                elseif storage.getItem({name=k1}).amount < v then
+                    print("MISSING SOME %s, ONLY HAVE %d of %d",k1,storage.getItem({name=k1}).amount,v)
                 end
             end
             for k1,v in pairs(recipes[k]) do
