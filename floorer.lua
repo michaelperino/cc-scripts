@@ -32,6 +32,7 @@ function item_RS_request(item, amount, slotty)
             reccy = tonumber(string.sub(m,1,5))
         end
     end
+    turtle.select(16)
     turtle.placeUp()
     i = 12
     while i > 2 do
