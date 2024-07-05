@@ -70,7 +70,7 @@ curr_rec = "powah:nitro_crystal"
 recipes[curr_rec] = {}
 recipes[curr_rec]["minecraft:nether_star"] = 1
 recipes[curr_rec]["minecraft:redstone_block"] = 2
-recipes[curr_rec]["minecraft:blazing_crystal_block"] = 1
+recipes[curr_rec]["powah:blazing_crystal_block"] = 1
 
 
 all_items = {}

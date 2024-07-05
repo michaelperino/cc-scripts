@@ -17,9 +17,9 @@ while true do
             storage.craftItem({name=item_req.name,count=num_req})
             v,a = storage.exportItem({name=item_req.name,count=num_req},"up")
             rednet.broadcast(string.format("%04d %04d", s, v))
-            sleep(1.5)
+            s1,m1,p1 = rednet.receive("dump_stop",6.5)
             redstone.setOutput("top",false)
-            sleep(5)
+            sleep(0.5)
             --storage.importItem({name=item_req.name,count=64},"up")
         end
     end
