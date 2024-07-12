@@ -100,6 +100,7 @@ while true do
             axis = string.sub(message,12,12)
             target = tonumber(string.sub(message,14))
             direction = 0
+			refuel()
             for count = 1,4 do
 				if turtle.forward() then
 					fx, fy, fz = gps.locate()

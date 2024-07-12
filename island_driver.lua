@@ -12,6 +12,7 @@ while s do
     end
 end
 num_turtles = i
+print(num_turtles)
 curr_chunk_x = 0
 curr_chunk_z = 0
 for i = 1,num_turtles do
