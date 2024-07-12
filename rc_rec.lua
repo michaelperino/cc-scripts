@@ -79,7 +79,9 @@ function digDown()
 end
 
 function command_complete()
-    rednet.broadcast("COMPLETE","command_complete")
+	if broadcast_on_completion then
+    	rednet.broadcast("COMPLETE","command_complete")
+	end
 end
 
 while true do
@@ -91,7 +93,7 @@ while true do
         command = string.sub(message,6,10)
         if command == "ackno" then
             broadcast_on_completion = true
-        elseif command = "noack" then
+        elseif command == "noack" then
             broadcast_on_completion = false
         elseif command == "shell" then
             shelll.run(string.sub(message,12))
@@ -209,64 +211,11 @@ while true do
 				end
 			end
 			print(direction,curr,cx,cy,cz)
-            --[[if command == "fseek" then
-				curr = 0
-				if coordinate ~= "Y" then
-					s,d = turtle.inspect()
-					while curr < dist do
-						if d.name ~= "computercraft:turtle" and d.name ~= "computercraft:turtle_normal" and d.name ~= "computercraft:turtle_advanced" and d.name ~= "minecraft:chest" and d.name ~= "enderstorage:ender_storage" then
-							turtle.dig()
-							if turtle.forward() then
-								curr = curr + 1
-							end
-						end
-						s,d = turtle.inspect()
-					end
-				elseif coordinate == "Y" then
-					s,d = turtle.inspectUp()
-					while curr < dist do
-						if d.name ~= "computercraft:turtle" and d.name ~= "computercraft:turtle_normal" and d.name ~= "computercraft:turtle_advanced" and d.name ~= "minecraft:chest" and d.name ~= "enderstorage:ender_storage" then
-							if target > cy then
-								digUp()
-								if turtle.up() then
-									curr = curr + 1
-								end
-							else
-								digDown()
-								if turtle.down() then
-									curr = curr + 1
-								end
-							end
-						end
-						s,d = turtle.inspectUp()
-					end
-				end
-			elseif command == "seek " then
-				curr = 0
-				if coordinate ~= "Y" then
-					while curr < dist do
-						if turtle.forward() then
-							curr = curr + 1
-						end
-					end
-				elseif coordinate == "Y" then
-					while curr < dist do
-						if target > cy then
-							if turtle.up() then
-								curr = curr + 1
-							end
-						else
-							if turtle.down() then
-								curr = curr + 1
-							end
-						end
-					end
-				end
-			end]]--
         elseif command == "find " then
-            sleep(1)
+            sleep(0.2)
             x,y,z = gps.locate()
             if(x) then
+				print(x,y,z)
                 rednet.broadcast("turtle "..os.getComputerLabel().." "..os.getComputerID().." "..x.." "..y.." "..z)
             else
                 rednet.broadcast("turtle "..os.getComputerLabel().." "..os.getComputerID().." ? ? ?")

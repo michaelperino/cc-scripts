@@ -6,9 +6,10 @@ while true do
     id = -001
     if tonumber(command) then
         id = tonumber(command)
-        print("Enter command for turtle ",string.format("%4d",os.getComputerID()),"\n")
+        print("Enter command for turtle ",string.format("%4d",id),"\n")
         command = read()
     end
+    id = string.format("%4d",id)
     if command == "shell" then
         print("Enter verbatim command\n")
         arg1 = read()
@@ -30,6 +31,7 @@ while true do
             rednet.broadcast(id.." "..command.." ".."Z".." "..target)
         end
     elseif command == "find" or command == "find " then
+        command = "find " 
         rednet.broadcast(id.." "..command)
         success = true
         while success do
