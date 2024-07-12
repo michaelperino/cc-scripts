@@ -1,5 +1,4 @@
-peripheral.find("modem").open(os.getComputerID())
-peripheral.find("modem").open(65535)
+rednet.open("left")
 broadcast_on_completion = false
 
 function item_RS_request(item, amount, slotty)

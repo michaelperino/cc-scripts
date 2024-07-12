@@ -51,23 +51,27 @@ function ParseCSVLine (line,sep)
 	return res
 end
 
-while h ~= nil do
-    data_array[i] = ParseCSVLine(h,",")
+while line ~= nil do
+    data_array[i] = ParseCSVLine(line,",")
+	line = h.readLine()
 end
 
 while true do
-    s,m = rednet.receive("printer")
-    comm = string.sub(m,1,3)
-    sleep(0.02)
-    if comm == "ORI" then
-        rednet.send(s,string.format("%6d,%6d,%6d,%6d",ox,oy,oz,od))
-    end
-    if comm == "DAT" then
-        data = ParseCSVLine(m)
-        reply = ""
-        for i = 0,15 do
-            reply = reply..tostring(data_array[data[2]-ox+1][data[4]-oz+1+i])..","
-        end
-        rednet.send(s,reply)
-    end
+    local event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
+	s = message.replyChannel
+	if message.protocol == "printer" then
+		comm = string.sub(message.message,1,3)
+		sleep(0.02)
+		if comm == "ORI" then
+			rednet.send(s,string.format("%6d,%6d,%6d,%6d",ox,oy,oz,od))
+		end
+		if comm == "DAT" then
+			data = ParseCSVLine(m)
+			reply = ""
+			for i = 0,15 do
+				reply = reply..tostring(data_array[data[2]-ox+1][data[4]-oz+1+i])..","
+			end
+			rednet.send(s,reply)
+		end
+	end
 end

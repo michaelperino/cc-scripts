@@ -1,5 +1,4 @@
-peripheral.find("modem").open(os.getComputerID())
-peripheral.find("modem").open(65535)
+rednet.open("left")
 storage = peripheral.find("rsBridge")
 while true do
     s,m,p = rednet.receive()

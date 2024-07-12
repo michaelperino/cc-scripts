@@ -4,8 +4,7 @@ offset_z_chunk = args[2]
 
 base_ID = 10
 
-peripheral.find("modem").open(os.getComputerID())
-peripheral.find("modem").open(65535)
+rednet.open("left")
 broadcast_on_completion = false
 
 function ParseCSVLine (line,sep) 
@@ -260,6 +259,7 @@ oy = data[2]
 oz = data[3]
 od = data[4]
 slot = 1
+m = nil
 for curr_z_offset = 0,15 do
     traverse(ox+offset_x_chunk*16,oy,oz+curr_z_offset*16)
     while m == nil do
