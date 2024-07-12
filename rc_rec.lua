@@ -87,7 +87,7 @@ while true do
     sender, message, distance = rednet.receive()
     turtle_id = string.sub(message,1,4)
     print(sender,message,distance,turtle_id)
-    if turtle_id == "-001" or turtle_id == string.format("%4d",os.getComputerID()) then
+    if turtle_id == "-001" or turtle_id == string.format("%04d",os.getComputerID()) then
         print("Executing command...")
         command = string.sub(message,6,10)
         if command == "ackno" then
