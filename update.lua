@@ -16,8 +16,20 @@ programs["program_provider.lua"] = "https://raw.githubusercontent.com/michaelper
 
 if program == "all" then
     for k,v in pairs(programs) do
-        shell.run("delete "..k)
-        shell.run("wget "..v)
+        if local_up ~= nil then
+            rednet.open("left")
+            sleep(math.random(50,500)/100)
+            rednet.broadcast(program,"program_update")
+            s,m = rednet.receive("program_file",10)
+            if m ~= nil then   
+                shell.run("delete "..k)
+                h = fs.open(k,"w")
+                h.write(m)
+            end
+        else
+            shell.run("delete "..k)
+            shell.run("wget "..v)
+        end
     end
 elseif local_up ~= nil then
     rednet.open("left")
