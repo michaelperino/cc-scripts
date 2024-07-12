@@ -6,10 +6,10 @@ while true do
     id = -001
     if tonumber(command) then
         id = tonumber(command)
-        print("Enter command for turtle ",string.format("%4d",id),"\n")
+        print("Enter command for turtle ",string.format("%04d",id),"\n")
         command = read()
     end
-    id = string.format("%4d",id)
+    id = string.format("%04d",id)
     if command == "shell" then
         print("Enter verbatim command\n")
         arg1 = read()
