@@ -95,7 +95,7 @@ while true do
         elseif command == "noack" then
             broadcast_on_completion = false
         elseif command == "shell" then
-            shelll.run(string.sub(message,12))
+            shell.run(string.sub(message,12))
         elseif command == "seek " or command == "fseek" then
             axis = string.sub(message,12,12)
             target = tonumber(string.sub(message,14))

@@ -177,10 +177,10 @@ function traverse(gx,gy,gz,gd)
             end
         end
     end
-    order = {"X","Y","Z","D"}
-    axes = {X=gx,Y=gy,Z=gz,D=gd}
+    order = {"Y1","X","Y2","Z","D"}
+    axes = {X=gx,Y1=90,Y2=gy,Z=gz,D=gd}
     for curr_axis = 1,4 do
-        axis = string.upper(order[curr_axis])
+        axis = string.sub(string.upper(order[curr_axis]),1,1)
         target = tonumber(axes[axis])
         if axis == "X" then
             if target > cx then
