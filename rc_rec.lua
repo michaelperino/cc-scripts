@@ -1,4 +1,4 @@
-peripheral.find("modem").open(os.getComputerID)
+peripheral.find("modem").open(os.getComputerID())
 peripheral.find("modem").open(65535)
 broadcast_on_completion = false
 
@@ -275,6 +275,8 @@ while true do
             refuel()
 		end
         command_complete()
+	end
+end
 
 
 

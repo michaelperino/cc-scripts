@@ -1,4 +1,4 @@
-peripheral.find("modem").open(os.getComputerID)
+peripheral.find("modem").open(os.getComputerID())
 peripheral.find("modem").open(65535)
 while true do
     print("Ender command or computer ID\n")
@@ -30,10 +30,10 @@ while true do
             rednet.broadcast(id.." "..command.." ".."Z".." "..target)
         end
     elseif command == "find" or command == "find " then
-        print("Press q to stop receiving\n")
-        local event, key, isHeld = os.pullEvent("key")
-        while key ~= keys.q do
-            success,message = rednet.receive(2)
+        rednet.broadcast(id.." "..command)
+        success = true
+        while success do
+            success,message = rednet.receive(0.5)
             if success then
                 print(message)
             end
