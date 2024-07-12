@@ -141,6 +141,9 @@ function traverse(gx,gy,gz,gd)
     --axis = string.sub(message,12,12)
     --target = tonumber(string.sub(message,14))
     direction = 0
+    turtle.up()
+    turtle.up()
+    turtle.up()
     for count = 1,4 do
         if turtle.forward() then
             fx, fy, fz = gps.locate()
@@ -275,7 +278,9 @@ oz = tonumber(data[3])
 od = tonumber(data[4])
 slot = 1
 m = nil
-for curr_z_offset = 0,15 do
+z_size = 15
+x_size = 15
+for curr_z_offset = 0,z_size do
     print(string.format("TRAVERSE %d %d %d %d\n",ox+offset_x_chunk*16,oy,oz+offset_z_chunk*16+curr_z_offset,od))
     traverse(ox+offset_x_chunk*16,oy,oz+offset_z_chunk*16+curr_z_offset,od)
     data = {}
@@ -287,7 +292,7 @@ for curr_z_offset = 0,15 do
         end
     end
     curr_y = 0
-    for curr_x_offset = 0,15 do
+    for curr_x_offset = 0,x_size do
         if turtle.getItemCount(slot) < 4 then
             item_RS_request(items[slot],62-turtle.getItemCount(slot),slot)
         end
@@ -310,8 +315,10 @@ for curr_z_offset = 0,15 do
             turtle.digDown()
             placeDown(1)
         --end
-        while turtle.forward() == false do
-            dig()
+        if curr_x_offset < x_size then
+            while turtle.forward() == false do
+                dig()
+            end
         end
         while 0 < curr_y do
             while turtle.down() == false do

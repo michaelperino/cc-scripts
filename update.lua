@@ -1,5 +1,6 @@
 local args = {...}
 program = args[1]
+local_up = args[2]
 
 programs = {}
 programs["floorer.lua"] = "https://raw.githubusercontent.com/michaelperino/cc-scripts/master/floorer.lua"
@@ -16,6 +17,15 @@ if program == "all" then
     for k,v in pairs(programs) do
         shell.run("delete "..k)
         shell.run("wget "..v)
+    end
+elseif local_up ~= nil then
+    rednet.open("left")
+    rednet.broadcast(program,"program_update")
+    s,m = rednet.receive("program_file",10)
+    if m ~= nil then   
+        shell.run("delete "..program)
+        h = fs.open(program,"w")
+        h.write(m)
     end
 else
     shell.run("delete "..program)
