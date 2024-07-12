@@ -177,7 +177,7 @@ function traverse(gx,gy,gz,gd)
             end
         end
     end
-    order = {1="X",2="Y",3="Z",4="D"}
+    order = {"X","Y","Z","D"}
     axes = {X=gx,Y=gy,Z=gz,D=gd}
     for curr_axis = 1,4 do
         axis = string.upper(order[curr_axis])
