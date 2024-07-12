@@ -115,7 +115,7 @@ function digUp()
 end
 
 function digDown()
-    success, block = turtle.digDown()
+    success, block = turtle.inspectDown()
     if block.name ~= "computercraft:turtle_advanced" and block.name ~= "computercraft:turtle_normal" then
         turtle.digDown()
         turtle.attack()
@@ -191,26 +191,28 @@ function traverse(gx,gy,gz,gd)
     end
     order = {"Y1","X","Y2","Z","D"}
     axes = {X=gx,Y1=90,Y2=gy,Z=gz,D=gd}
-    for curr_axis = 1,4 do
+    for curr_axis = 1,5 do
+        cx, cy, cz = gps.locate()
         axis = string.sub(string.upper(order[curr_axis]),1,1)
-        target = tonumber(axes[axis])
+        target = tonumber(axes[order[curr_axis]])
+        targetdir = direction
         if axis == "X" then
             if target > cx then
                 targetdir = 1
-            else
+            elseif target < cx then
                 targetdir = 3
             end
             dist = math.abs(target - cx)
         end
         if axis == "Y" then
-            targetdir = 1
+            targetdir = direction
             curr = cy
             dist = math.abs(target - cy)
         end
         if axis == "Z" then
             if target > cz then
                 targetdir = 4
-            else
+            elseif target < cz then
                 targetdir = 2
             end
             dist = math.abs(target - cz)
