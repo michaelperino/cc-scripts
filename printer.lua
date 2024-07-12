@@ -255,19 +255,22 @@ while m == nil do
     s,m = rednet.receive("printer",10)
 end
 data = ParseCSVLine(m,",")
-ox = data[1]
-oy = data[2]
-oz = data[3]
-od = data[4]
+ox = tonumber(data[1])
+oy = tonumber(data[2])
+oz = tonumber(data[3])
+od = tonumber(data[4])
 slot = 1
 m = nil
 for curr_z_offset = 0,15 do
     traverse(ox+offset_x_chunk*16,oy,oz+curr_z_offset*16,od)
-    while m == nil do
+    data = {}
+    while data[15] == nil do
         rednet.send(base_ID,string.format("DAT,%06d,%06d,%06d",ox+offset_x_chunk*16,oy,oz+offset_z_chunk*16+curr_z_offset),"printer")
         s,m = rednet.receive("printer",10)
+        if m ~= nil then
+            data = ParseCSVLine(m,",")
+        end
     end
-    data = ParseCSVLine(m,",")
     curr_y = oy
     for curr_x_offset = 0,15 do
         if turtle.getItemCount(slot) < 4 then
@@ -277,8 +280,8 @@ for curr_z_offset = 0,15 do
             dig()
         end
         target = tonumber(data[curr_x_offset+1])
-        print(target)
-            if target >= 0 then
+        if target >= 0 then
+            print(target,type(target),curr_y,type(curr_y))
             if target < curr_y then
                 while turtle.down() == false do
                     digDown()
