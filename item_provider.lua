@@ -3,11 +3,11 @@ storage = peripheral.wrap("left")
 while true do
     s,m,p = rednet.receive()
     sleep(0.2)
-    if string.len(m) > 6 then
-        num_req = tonumber(string.sub(m,1,5))
+    if string.len(m) > 6 and string.sub(m,1,4) == "ITEM" then
+        num_req = tonumber(string.sub(m,6,10))
         print(num_req)
         item_req = {}
-        item_req.name = string.sub(m,6)
+        item_req.name = string.sub(m,12)
         print(item_req.name)
         item_stor = storage.getItem(item_req)
         if item_stor ~= nil then
