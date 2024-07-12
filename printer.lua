@@ -190,7 +190,7 @@ function traverse(gx,gy,gz,gd)
         end
     end
     order = {"Y1","X","Z","Y2","D"}
-    axes = {X=gx,Y1=90,Y2=gy,Z=gz,D=gd}
+    axes = {X=gx,Y1=78+math.random(0,10),Y2=gy,Z=gz,D=gd}
     for curr_axis = 1,5 do
         cx, cy, cz = gps.locate()
         axis = string.sub(string.upper(order[curr_axis]),1,1)
@@ -276,6 +276,7 @@ od = tonumber(data[4])
 slot = 1
 m = nil
 for curr_z_offset = 0,15 do
+    print(string.format("TRAVERSE %d %d %d %d\n",ox+offset_x_chunk*16,oy,oz+offset_z_chunk*16+curr_z_offset,od))
     traverse(ox+offset_x_chunk*16,oy,oz+offset_z_chunk*16+curr_z_offset,od)
     data = {}
     while data[15] == nil do
@@ -288,7 +289,7 @@ for curr_z_offset = 0,15 do
     curr_y = 0
     for curr_x_offset = 0,15 do
         if turtle.getItemCount(slot) < 4 then
-            item_RS_request("minecraft:dirt",62-turtle.getItemCount(slot),slot)
+            item_RS_request(items[slot],62-turtle.getItemCount(slot),slot)
         end
         target = tonumber(data[curr_x_offset+1])
         while target < curr_y do
@@ -297,7 +298,7 @@ for curr_z_offset = 0,15 do
             end
             curr_y = curr_y - 1
         end
-        if target >= 0 then
+        --if target >= 0 then
             print(target,type(target),curr_y,type(curr_y))
             while target > curr_y do
                 while turtle.up() == false do
@@ -308,7 +309,7 @@ for curr_z_offset = 0,15 do
             end
             turtle.digDown()
             placeDown(1)
-        end
+        --end
         while turtle.forward() == false do
             dig()
         end

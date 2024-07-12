@@ -1,7 +1,7 @@
 --ORIGIN
-ox = 172
+ox = 176
 oy = 63
-oz = 475
+oz = 480
 od = 1
 
 peripheral.find("modem").open(os.getComputerID())
@@ -73,8 +73,11 @@ while true do
 			data = ParseCSVLine(m)
 			reply = ""
 			for i = 0,15 do
-				print(data[2]-ox+1,data[4]-oz+1+i)
-				reply = reply..tostring(data_array[data[2]-ox+1][data[4]-oz+1+i])..","
+				print(data[4]-oz+1,data[2]-ox+1+i)
+				if data_array[data[2]-ox+1] == nil then
+					break
+				end
+				reply = reply..tostring(data_array[data[4]-oz+1][data[2]-ox+1+i])..","
 			end
 			rednet.send(s,reply,"printer")
 		end
