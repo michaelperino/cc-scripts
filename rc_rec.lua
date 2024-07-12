@@ -171,6 +171,11 @@ while true do
 				end
 				dist = math.abs(target - cz)
 			end
+			if axis == "D" then
+				if target > 0 and target < 5 then
+					targetdir = target
+				end
+			end
 			while direction ~= targetdir do
 				turtle.turnLeft()
 				direction = direction + 1
@@ -182,7 +187,7 @@ while true do
                 dig_enabled = true
             end
             curr = 0
-            if axis ~= "Y" then
+            if axis == "X" or axis == "Z" then
                 while curr < dist do
                     if dig_enabled then
                         dig()
@@ -191,7 +196,7 @@ while true do
                         curr = curr + 1
                     end
                 end
-            else
+            elseif axis == "Y" then
                 while curr < dist do
                     if target > cy then
                         if dig_enabled then

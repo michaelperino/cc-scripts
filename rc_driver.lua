@@ -29,6 +29,8 @@ while true do
             rednet.broadcast(id.." "..command.." ".."Y".." "..target)
         elseif axis == "z" or axis == "Z" then
             rednet.broadcast(id.." "..command.." ".."Z".." "..target)
+        elseif axis == "d" or axis == "D" then
+            rednet.broadcast(id.." "..command.." ".."D".." "..target)
         end
     elseif command == "find" or command == "find " then
         command = "find " 
