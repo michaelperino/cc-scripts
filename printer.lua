@@ -126,8 +126,8 @@ end
 
 function traverse(gx,gy,gz,gd)
     refuel()
-    axis = string.sub(message,12,12)
-    target = tonumber(string.sub(message,14))
+    --axis = string.sub(message,12,12)
+    --target = tonumber(string.sub(message,14))
     direction = 0
     for count = 1,4 do
         if turtle.forward() then
@@ -177,10 +177,11 @@ function traverse(gx,gy,gz,gd)
             end
         end
     end
+    order = {1="X",2="Y",3="Z",4="D"}
     axes = {X=gx,Y=gy,Z=gz,D=gd}
-    for k,v in pairs(axes) do
-        axis = string.upper(k)
-        target = v
+    for curr_axis = 1,4 do
+        axis = string.upper(order[curr_axis])
+        target = tonumber(axes[axis])
         if axis == "X" then
             if target > cx then
                 targetdir = 1

@@ -2,6 +2,7 @@
 ox = 172
 oy = 63
 oz = 475
+od = 1
 
 peripheral.find("modem").open(os.getComputerID())
 
@@ -59,12 +60,12 @@ end
 while true do
     local event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
 	print(side,channel,replyChannel,message.sProtocol,message.message,distance)
-	s = message.replyChannel
+	s = replyChannel
 	if message.sProtocol == "printer" then
 		comm = string.sub(message.message,1,3)
 		sleep(0.02)
 		if comm == "ORI" then
-			rednet.send(s,string.format("%6d,%6d,%6d,%6d",ox,oy,oz,od))
+			rednet.send(s,string.format("%6d,%6d,%6d,%6d",ox,oy,oz,od),"printer")
 		end
 		if comm == "DAT" then
 			data = ParseCSVLine(m)
@@ -72,7 +73,7 @@ while true do
 			for i = 0,15 do
 				reply = reply..tostring(data_array[data[2]-ox+1][data[4]-oz+1+i])..","
 			end
-			rednet.send(s,reply)
+			rednet.send(s,reply,"printer")
 		end
 	end
 end
