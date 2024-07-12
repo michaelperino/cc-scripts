@@ -123,6 +123,18 @@ function digDown()
     refuel()
 end
 
+items = {}
+items[1] = "minecraft:dirt"
+items[2] = "minecraft:cobblestone"
+
+function placeDown(slotty)
+    if turtle.getItemCount(slotty) < 4 then
+        item_RS_request(items[slotty],62-turtle.getItemCount(slotty),slotty)
+    end
+    turtle.select(slotty)
+    turtle.placeDown()
+end
+
 
 function traverse(gx,gy,gz,gd)
     refuel()
@@ -276,26 +288,33 @@ for curr_z_offset = 0,15 do
         if turtle.getItemCount(slot) < 4 then
             item_RS_request("minecraft:dirt",62-turtle.getItemCount(slot),slot)
         end
-        turtle.select(slot)
-        while turtle.forward() == false do
-            dig()
-        end
         target = tonumber(data[curr_x_offset+1])
+        while target < curr_y do
+            while turtle.down() == false do
+                digDown()
+            end
+            curr_y = curr_y - 1
+        end
         if target >= 0 then
             print(target,type(target),curr_y,type(curr_y))
-            while target < curr_y do
-                while turtle.down() == false do
-                    digDown()
-                end
-                curr_y = curr_y - 1
-            end
             while target > curr_y do
                 while turtle.up() == false do
                     digUp()
                 end
+                placeDown(2)
                 curr_y = curr_y + 1
             end
-            turtle.placeDown()
+            turtle.digDown()
+            placeDown(1)
+        end
+        while turtle.forward() == false do
+            dig()
+        end
+        while 0 < curr_y do
+            while turtle.down() == false do
+                digDown()
+            end
+            curr_y = curr_y - 1
         end
     end
 end
