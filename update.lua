@@ -10,6 +10,7 @@ programs["rc_rec.lua"] = "https://raw.githubusercontent.com/michaelperino/cc-scr
 programs["rc_driver.lua"] = "https://raw.githubusercontent.com/michaelperino/cc-scripts/master/rc_driver.lua"
 programs["printer.lua"] = "https://raw.githubusercontent.com/michaelperino/cc-scripts/master/printer.lua"
 programs["drive_printer.lua"] = "https://raw.githubusercontent.com/michaelperino/cc-scripts/master/drive_printer.lua"
+programs["island_driver.lua"] = "https://raw.githubusercontent.com/michaelperino/cc-scripts/master/island_driver.lua"
 
 if program == "all" then
     for k,v in pairs(programs) do
