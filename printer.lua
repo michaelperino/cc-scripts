@@ -262,7 +262,7 @@ od = tonumber(data[4])
 slot = 1
 m = nil
 for curr_z_offset = 0,15 do
-    traverse(ox+offset_x_chunk*16,oy,oz+curr_z_offset*16,od)
+    traverse(ox+offset_x_chunk*16,oy,oz+offset_z_chunk*16+curr_z_offset,od)
     data = {}
     while data[15] == nil do
         rednet.send(base_ID,string.format("DAT,%06d,%06d,%06d",ox+offset_x_chunk*16,oy,oz+offset_z_chunk*16+curr_z_offset),"printer")
@@ -271,24 +271,25 @@ for curr_z_offset = 0,15 do
             data = ParseCSVLine(m,",")
         end
     end
-    curr_y = oy
+    curr_y = 0
     for curr_x_offset = 0,15 do
         if turtle.getItemCount(slot) < 4 then
             item_RS_request("minecraft:dirt",62-turtle.getItemCount(slot),slot)
         end
+        turtle.select(slot)
         while turtle.forward() == false do
             dig()
         end
         target = tonumber(data[curr_x_offset+1])
         if target >= 0 then
             print(target,type(target),curr_y,type(curr_y))
-            if target < curr_y then
+            while target < curr_y do
                 while turtle.down() == false do
                     digDown()
                 end
                 curr_y = curr_y - 1
             end
-            if target > curr_y then
+            while target > curr_y do
                 while turtle.up() == false do
                     digUp()
                 end
