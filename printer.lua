@@ -262,7 +262,7 @@ od = data[4]
 slot = 1
 m = nil
 for curr_z_offset = 0,15 do
-    traverse(ox+offset_x_chunk*16,oy,oz+curr_z_offset*16)
+    traverse(ox+offset_x_chunk*16,oy,oz+curr_z_offset*16,od)
     while m == nil do
         rednet.send(base_ID,string.format("DAT,%06d,%06d,%06d",ox+offset_x_chunk*16,oy,oz+curr_z_offset*16),"printer")
         s,m = rednet.receive("printer",10)
@@ -276,20 +276,22 @@ for curr_z_offset = 0,15 do
         while turtle.forward() == false do
             dig()
         end
-        target = data[curr_x_offset+2]
-        if target < curr_y then
-            while turtle.down() == false do
-                digDown()
+        target = tonumber(data[curr_x_offset+2])
+            if target >= 0 then
+            if target < curr_y then
+                while turtle.down() == false do
+                    digDown()
+                end
+                curr_y = curr_y - 1
             end
-            curr_y = curr_y - 1
-        end
-        if target > curr_y then
-            while turtle.up() == false do
-                digUp()
+            if target > curr_y then
+                while turtle.up() == false do
+                    digUp()
+                end
+                curr_y = curr_y + 1
             end
-            curr_y = curr_y + 1
+            turtle.placeDown()
         end
-        turtle.placeDown()
     end
 end
 

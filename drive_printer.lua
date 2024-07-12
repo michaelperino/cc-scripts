@@ -10,7 +10,7 @@ filename = "island1"
 local h = fs.open(filename,"r")
 line = h.readLine()
 data_array = {}
-i = 0
+i = 1
 
 function ParseCSVLine (line,sep) 
 	local res = {}
@@ -54,6 +54,7 @@ end
 
 while line ~= nil do
     data_array[i] = ParseCSVLine(line,",")
+	i = i + 1
 	line = h.readLine()
 end
 
@@ -61,8 +62,9 @@ while true do
     local event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
 	print(side,channel,replyChannel,message.sProtocol,message.message,distance)
 	s = replyChannel
+	m = message.message
 	if message.sProtocol == "printer" then
-		comm = string.sub(message.message,1,3)
+		comm = string.sub(m,1,3)
 		sleep(0.02)
 		if comm == "ORI" then
 			rednet.send(s,string.format("%6d,%6d,%6d,%6d",ox,oy,oz,od),"printer")
@@ -71,6 +73,7 @@ while true do
 			data = ParseCSVLine(m)
 			reply = ""
 			for i = 0,15 do
+				print(data[2]-ox+1,data[4]-oz+1+i)
 				reply = reply..tostring(data_array[data[2]-ox+1][data[4]-oz+1+i])..","
 			end
 			rednet.send(s,reply,"printer")
