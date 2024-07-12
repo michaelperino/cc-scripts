@@ -189,7 +189,7 @@ function traverse(gx,gy,gz,gd)
             end
         end
     end
-    order = {"Y1","X","Y2","Z","D"}
+    order = {"Y1","X","Z","Y2","D"}
     axes = {X=gx,Y1=90,Y2=gy,Z=gz,D=gd}
     for curr_axis = 1,5 do
         cx, cy, cz = gps.locate()
