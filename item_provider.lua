@@ -1,5 +1,6 @@
-rednet.open("bottom")
-storage = peripheral.wrap("left")
+peripheral.find("modem").open(os.getComputerID())
+peripheral.find("modem").open(65535)
+storage = peripheral.find("rsBridge")
 while true do
     s,m,p = rednet.receive()
     sleep(0.2)
@@ -7,7 +8,7 @@ while true do
         num_req = tonumber(string.sub(m,6,10))
         print(num_req)
         item_req = {}
-        item_req.name = string.sub(m,12)
+        item_req.name = string.sub(m,11)
         print(item_req.name)
         item_stor = storage.getItem(item_req)
         if item_stor ~= nil then
