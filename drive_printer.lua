@@ -7,7 +7,7 @@ peripheral.find("modem").open(os.getComputerID())
 
 filename = "island1"
 local h = fs.open(filename,"r")
-line = h.readline()
+line = h.readLine()
 data_array = {}
 i = 0
 
@@ -58,8 +58,9 @@ end
 
 while true do
     local event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
+	print(side,channel,replyChannel,message.sProtocol,message.message,distance)
 	s = message.replyChannel
-	if message.protocol == "printer" then
+	if message.sProtocol == "printer" then
 		comm = string.sub(message.message,1,3)
 		sleep(0.02)
 		if comm == "ORI" then
