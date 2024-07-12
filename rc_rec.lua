@@ -149,8 +149,8 @@ while true do
 					end
 				end
 			end
-            coordinate = string.upper(coordinate)
-			if coordinate == "X" then
+            axis = string.upper(axis)
+			if axis == "X" then
 				if target > cx then
 					targetdir = 1
 				else
@@ -158,12 +158,12 @@ while true do
 				end
 				dist = math.abs(target - cx)
 			end
-			if coordinate == "Y" then
+			if axis == "Y" then
 				targetdir = 1
 				curr = cy
 				dist = math.abs(target - cy)
 			end
-			if coordinate == "Z" then
+			if axis == "Z" then
 				if target > cz then
 					targetdir = 4
 				else
@@ -182,7 +182,7 @@ while true do
                 dig_enabled = true
             end
             curr = 0
-            if coordinate ~= "Y" then
+            if axis ~= "Y" then
                 while curr < dist do
                     if dig_enabled then
                         dig()

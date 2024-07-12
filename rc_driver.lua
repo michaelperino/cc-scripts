@@ -23,11 +23,11 @@ while true do
         print("where on axis?\n")
         value = read()
         target = string.format("%6d",value)
-        if coordinate == "x" or coordinate == "X" then
+        if axis == "x" or axis == "X" then
             rednet.broadcast(id.." "..command.." ".."X".." "..target)
-        elseif coordinate == "y" or coordinate == "Y" then
+        elseif axis == "y" or axis == "Y" then
             rednet.broadcast(id.." "..command.." ".."Y".." "..target)
-        elseif coordinate == "z" or coordinate == "Z" then
+        elseif axis == "z" or axis == "Z" then
             rednet.broadcast(id.." "..command.." ".."Z".." "..target)
         end
     elseif command == "find" or command == "find " then
