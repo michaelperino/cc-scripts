@@ -19,7 +19,7 @@ while true do
             rednet.broadcast(string.format("%04d %04d", s, v))
             s1,m1,p1 = rednet.receive("dump_stop",6.5)
             redstone.setOutput("top",false)
-            sleep(0.5)
+            sleep(0.1)
             --storage.importItem({name=item_req.name,count=64},"up")
         end
     end

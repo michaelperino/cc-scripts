@@ -3,7 +3,9 @@ offset_x_chunk = args[1]
 offset_z_chunk = args[2]
 chunk_size = 8
 
-base_ID = 10
+--base_IDs = {50001,50002,50003,50004}
+base_ID = 50000+math.random(1,4)
+height_ID = 49999
 
 rednet.open("left")
 broadcast_on_completion = false
@@ -59,11 +61,11 @@ function item_RS_request(item, amount, slotty)
     rednet.broadcast(request)
     while reccy ~= os.computerID() do
 		rednet.broadcast(request)
-        s,m = rednet.receive(7.8)
+        s,m = rednet.receive(2+math.random(10,100)/1000)
         if s == nil then
             --rednet.broadcast(request)
 		elseif p == "dump_stop" then
-            sleep(0.6)
+            sleep(math.random(110,200)/1000)
             --rednet.broadcast(request)
         else
             print(m)
@@ -171,7 +173,7 @@ function traverse(gx,gy,gz,gd)
     turtle.up()
     turtle.up()
     turtle.up()
-    rednet.broadcast("SEY PLEASE","printer")
+    rednet.send(height_ID,"SEY PLEASE","printer")
     y_val = math.random(1,15)
     s,m,p = rednet.receive(2)
     if s ~= nil then
@@ -311,13 +313,13 @@ function traverse(gx,gy,gz,gd)
         end
         print(direction,curr,cx,cy,cz)
     end
-    rednet.broadcast("REY PLEASE","printer")
+    rednet.send(height_ID,"REY PLEASE","printer")
 end
 
 m = nil
 while m == nil do
     rednet.send(base_ID,"ORI","printer")
-    s,m = rednet.receive("printer",10)
+    s,m = rednet.receive("printer",5)
 end
 data = ParseCSVLine(m,",")
 ox = tonumber(data[1])
@@ -334,7 +336,7 @@ for curr_z_offset = 0,(z_size-1) do
     data = {}
     while data[15] == nil do
         rednet.send(base_ID,string.format("DAT,%06d,%06d,%06d",ox+offset_x_chunk*x_size,oy,oz+offset_z_chunk*z_size+curr_z_offset),"printer")
-        s,m = rednet.receive("printer",10)
+        s,m = rednet.receive("printer",5)
         if m ~= nil then
             data = ParseCSVLine(m,",")
         end
@@ -363,7 +365,7 @@ for curr_z_offset = 0,(z_size-1) do
             turtle.digDown()
             placeDown(1)
         --end
-        if curr_x_offset < x_size then
+        if curr_x_offset < (x_size-1) then
                 while turtle.forward() == false do
                     dig()
                 end

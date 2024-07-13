@@ -4,7 +4,9 @@ oy = 63
 oz = 480
 od = 1
 
-peripheral.find("modem").open(os.getComputerID())
+rednet.open("left")
+MY_ID = 50001
+peripheral.find("modem").open(MY_ID)
 
 filename = "island1"
 local h = fs.open(filename,"r")
@@ -64,6 +66,17 @@ for i = 0,100 do
 	valid_Ys[i] = i
 end
 
+function generateSquareData(x,z,size_x,size_z):
+	block = {}
+	for i = 1,size_z do
+		block[i] = {}
+		for j = 1,size_x do
+			block[i][j] = data_array[z-oz+1+i][x-ox+1+j]
+		end
+	end
+	return block
+end
+
 
 while true do
     local event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
@@ -86,6 +99,11 @@ while true do
 				end
 				reply = reply..tostring(data_array[data[4]-oz+1][data[2]-ox+1+i])..","
 			end
+			rednet.send(s,reply,"printer")
+		end
+		if comm == "SQU" then
+			data = ParseCSVLine(m)
+			reply = generateSquareData(data[2],data[4],data[6],data[7])
 			rednet.send(s,reply,"printer")
 		end
 		if comm == "SEY" then
