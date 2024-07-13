@@ -81,12 +81,12 @@ function item_RS_request(item, amount, slotty)
     while not turtle.placeUp() do
         digUp()
     end
-    i = 12
-    if turtle.getItemCount(i) > 1 then
-        while i > 2 do
-        turtle.select(i)
-        turtle.dropUp(64)
-        i = i - 1
+    for i = 10,3 do
+        if turtle.getItemCount(i) > 1 then
+            while i > 2 do
+            turtle.select(i)
+            turtle.dropUp(64)
+            end
         end
     end
     turtle.select(slotty)
@@ -96,6 +96,7 @@ function item_RS_request(item, amount, slotty)
     --turtle.select(14)
     --turtle.equipRight()
     turtle.select(16)
+    turtle.dropUp(64)
     turtle.digUp()
     turtle.select(slotty)
 end

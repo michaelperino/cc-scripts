@@ -40,11 +40,11 @@ for i = 1,num_turtles do
 end
 while chunk_idx <= #all_chunks do
     s,m = rednet.receive("command_complete")
-    f.write(string.format("Comm Complete %d",s))
+    f.write(string.format("Comm Complete %d\n",s))
     sleep(0.1)
     curr_chunk = all_chunks[chunk_idx]
     chunk_idx = chunk_idx + 1
-    rednet.broadcast(string.format("%04d shell printer.lua %d %d",turtles[i],curr_chunk["x"],curr_chunk["z"]))
+    rednet.broadcast(string.format("%04d shell printer.lua %d %d",s,curr_chunk["x"],curr_chunk["z"]))
     f.write(string.format("%d %d started by %d\n",curr_chunk["x"],curr_chunk["z"],turtles[i]))
     f.flush()
 end
