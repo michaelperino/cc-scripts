@@ -94,7 +94,10 @@ while true do
 			reply = ""
 			for i = 0,18 do
 				print(data[4]-oz+1,data[2]-ox+1+i)
-				if data_array[data[2]-ox+1] == nil then
+				if data_array[data[4]-oz+1] == nil then
+					break
+				end
+				if data_array[data[4]-oz+1][data[2]-ox+1+i] == nil then
 					break
 				end
 				reply = reply..tostring(data_array[data[4]-oz+1][data[2]-ox+1+i])..","
