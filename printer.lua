@@ -98,7 +98,7 @@ function refuel()
 end
 
 function unstuck(depth)
-    reverse = {turtle.back = turtle.forward, turtle.forward = turtle.back, turtle.turnLeft = turtle.turnRight, turtle.turnRight = turtle.turnLeft, turtle.up = turtle.down, turtle.down = turtle.up}
+    reverse = {[turtle.back] = turtle.forward, [turtle.forward] = turtle.back, [turtle.turnLeft] = turtle.turnRight, [turtle.turnRight] = turtle.turnLeft, [turtle.up] = turtle.down, [turtle.down] = turtle.up}
     i = math.random(1,6)
     i1 = 1
     first = nil

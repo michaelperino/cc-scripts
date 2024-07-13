@@ -44,6 +44,7 @@ end
 
 function refuel()
     if turtle.getFuelLevel() < 6000 then
+		print("WAITING ON FUEL!!")
         item_RS_request("minecraft:coal",40,12)
         turtle.select(12)
         turtle.refuel(40)
