@@ -179,9 +179,15 @@ function traverse(gx,gy,gz,gd)
     turtle.up()
     for count = 1,4 do
         if turtle.forward() then
-            fx, fy, fz = gps.locate()
+            fx = nil
+            while fx == nil do
+                fx, fy, fz = gps.locate()
+            end
             turtle.back()
-            cx, cy, cz = gps.locate()
+            cx = nil
+            while cx == nil do
+                cx, cy, cz = gps.locate()
+            end
             if fx > cx then
                 direction = 1
             elseif fx < cx then

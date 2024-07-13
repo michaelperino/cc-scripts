@@ -104,12 +104,12 @@ while true do
             for count = 1,4 do
 				if turtle.forward() then
 					fx = nil
-					while ~fx do
+					while fx == nil do
 						fx, fy, fz = gps.locate()
 					end
 					turtle.back()
 					cx = nil
-					while ~cx do
+					while cx == nil do
 						cx, cy, cz = gps.locate()
 					end
 					if fx > cx then
