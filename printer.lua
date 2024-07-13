@@ -102,7 +102,19 @@ function refuel()
 end
 
 function unstuck(depth)
-    reverse = {[turtle.back] = turtle.forward, [turtle.forward] = turtle.back, [turtle.turnLeft] = turtle.turnRight, [turtle.turnRight] = turtle.turnLeft, [turtle.up] = turtle.down, [turtle.down] = turtle.up}
+    if turtle.back() then
+        while not turtle.forward() do
+            print("STUCK!")
+            sleep(math.random(50,200)/100)
+        end
+    end
+    if turtle.down() then
+        while not turtle.up() do
+            print("STUCK!")
+            sleep(math.random(50,200)/100)
+        end
+    end
+    --[[reverse = {[turtle.back] = turtle.forward, [turtle.forward] = turtle.back, [turtle.turnLeft] = turtle.turnRight, [turtle.turnRight] = turtle.turnLeft, [turtle.up] = turtle.down, [turtle.down] = turtle.up}
     i = math.random(1,6)
     i1 = 1
     first = nil
@@ -123,7 +135,7 @@ function unstuck(depth)
                 end
             end
         end
-    end
+    end]]--
 end
     
 
