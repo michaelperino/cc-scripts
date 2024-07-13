@@ -112,7 +112,7 @@ function unstuck(depth)
     end
     if first ~= nil then
         if first() then
-            while ~second() do
+            while not second() do
                 rednet.broadcast("STUCK!!")
                 if depth < 20 then
                     unstuck(depth+1)
