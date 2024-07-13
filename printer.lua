@@ -10,6 +10,11 @@ height_ID = 49999
 rednet.open("left")
 broadcast_on_completion = false
 
+function get_base_ID()
+    base_ID = 50000+math.random(1,4)
+    return base_ID
+end
+
 function ParseCSVLine (line,sep) 
 	local res = {}
 	local pos = 1
@@ -318,7 +323,7 @@ end
 
 m = nil
 while m == nil do
-    rednet.send(base_ID,"ORI","printer")
+    rednet.send(get_base_ID(),"ORI","printer")
     s,m = rednet.receive("printer",5)
 end
 data = ParseCSVLine(m,",")
@@ -335,7 +340,7 @@ for curr_z_offset = 0,(z_size-1) do
     traverse(ox+offset_x_chunk*x_size,oy,oz+offset_z_chunk*z_size+curr_z_offset,od)
     data = {}
     while data[15] == nil do
-        rednet.send(base_ID,string.format("DAT,%06d,%06d,%06d",ox+offset_x_chunk*x_size,oy,oz+offset_z_chunk*z_size+curr_z_offset),"printer")
+        rednet.send(get_base_ID(),string.format("DAT,%06d,%06d,%06d",ox+offset_x_chunk*x_size,oy,oz+offset_z_chunk*z_size+curr_z_offset),"printer")
         s,m = rednet.receive("printer",5)
         if m ~= nil then
             data = ParseCSVLine(m,",")

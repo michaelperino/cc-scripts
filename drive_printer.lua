@@ -66,7 +66,7 @@ for i = 0,100 do
 	valid_Ys[i] = i
 end
 
-function generateSquareData(x,z,size_x,size_z):
+function generateSquareData(x,z,size_x,size_z)
 	block = {}
 	for i = 1,size_z do
 		block[i] = {}
