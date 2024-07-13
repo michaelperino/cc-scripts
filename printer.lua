@@ -103,7 +103,7 @@ function unstuck(depth)
     i1 = 1
     first = nil
     second = nil
-    for k,v in pairs(reverse)
+    for k,v in pairs(reverse) do
         if i1 == i then
             first = k
             second = v
