@@ -325,19 +325,19 @@ slot = 1
 m = nil
 z_size = chunk_size
 x_size = chunk_size
-for curr_z_offset = 0,z_size do
-    print(string.format("TRAVERSE %d %d %d %d\n",ox+offset_x_chunk*16,oy,oz+offset_z_chunk*16+curr_z_offset,od))
-    traverse(ox+offset_x_chunk*16,oy,oz+offset_z_chunk*16+curr_z_offset,od)
+for curr_z_offset = 0,(z_size-1) do
+    print(string.format("TRAVERSE %d %d %d %d\n",ox+offset_x_chunk*x_size,oy,oz+offset_z_chunk*z_size+curr_z_offset,od))
+    traverse(ox+offset_x_chunk*x_size,oy,oz+offset_z_chunk*z_size+curr_z_offset,od)
     data = {}
     while data[15] == nil do
-        rednet.send(base_ID,string.format("DAT,%06d,%06d,%06d",ox+offset_x_chunk*16,oy,oz+offset_z_chunk*16+curr_z_offset),"printer")
+        rednet.send(base_ID,string.format("DAT,%06d,%06d,%06d",ox+offset_x_chunk*x_size,oy,oz+offset_z_chunk*z_size+curr_z_offset),"printer")
         s,m = rednet.receive("printer",10)
         if m ~= nil then
             data = ParseCSVLine(m,",")
         end
     end
     curr_y = 0
-    for curr_x_offset = 0,x_size do
+    for curr_x_offset = 0,(x_size-1) do
         if turtle.getItemCount(slot) < 4 then
             item_RS_request(items[slot],62-turtle.getItemCount(slot),slot)
         end
