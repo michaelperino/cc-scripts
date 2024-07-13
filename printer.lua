@@ -361,15 +361,15 @@ for curr_z_offset = 0,z_size do
             placeDown(1)
         --end
         if curr_x_offset < x_size then
-            while turtle.forward() == false do
-                dig()
+                while turtle.forward() == false do
+                    dig()
+                end
+            while 0 < curr_y do
+                while turtle.down() == false do
+                    digDown()
+                end
+                curr_y = curr_y - 1
             end
-        end
-        while 0 < curr_y do
-            while turtle.down() == false do
-                digDown()
-            end
-            curr_y = curr_y - 1
         end
     end
 end

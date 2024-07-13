@@ -1,6 +1,59 @@
 rednet.open("left")
 broadcast_on_completion = false
 
+function dump()
+	turtle.select(16)
+    while not turtle.placeUp() do
+        digUp()
+    end
+	for i = 1,16 do
+		turtle.select(i)
+		turtle.dropUp(64)
+	end
+	turtle.select(16)
+	turtle.digUp()
+end
+
+function ParseCSVLine (line,sep) 
+	local res = {}
+	local pos = 1
+	sep = sep or ','
+	while true do 
+		local c = string.sub(line,pos,pos)
+		if (c == "") then break end
+		if (c == '"') then
+			-- quoted value (ignore separator within)
+			local txt = ""
+			repeat
+				local startp,endp = string.find(line,'^%b""',pos)
+				txt = txt..string.sub(line,startp+1,endp-1)
+				pos = endp + 1
+				c = string.sub(line,pos,pos) 
+				if (c == '"') then txt = txt..'"' end 
+				-- check first char AFTER quoted string, if it is another
+				-- quoted string without separator, then append it
+				-- this is the way to "escape" the quote char in a quote. example:
+				--   value1,"blub""blip""boing",value3  will result in blub"blip"boing  for the middle
+			until (c ~= '"')
+			table.insert(res,txt)
+			assert(c == sep or c == "")
+			pos = pos + 1
+		else	
+			-- no quotes used, just look for the first separator
+			local startp,endp = string.find(line,sep,pos)
+			if (startp) then 
+				table.insert(res,string.sub(line,pos,startp-1))
+				pos = endp + 1
+			else
+				-- no separator found -> use rest of string and terminate
+				table.insert(res,string.sub(line,pos))
+				break
+			end 
+		end
+	end
+	return res
+end
+
 function item_RS_request(item, amount, slotty)
     --turtle.select(14)
     --turtle.digUp()
@@ -93,6 +146,7 @@ while true do
         command = string.sub(message,6,10)
         if command == "ackno" then
             broadcast_on_completion = true
+			sleep(math.random(50,500)/1000)
         elseif command == "noack" then
             broadcast_on_completion = false
         elseif command == "shell" then
@@ -240,8 +294,16 @@ while true do
             end
         elseif command == "fuel " then
             refuel()
+		elseif command == "item " then
+			command_split = ParseCSVLine(message," ")
+			item_RS_request(command_split[3],tonumber(command_split[4]),tonumber(command_split[5]))
+		elseif command == "dump " then
+			dump()
+		elseif command = "lua  " then
+			item_info = ParseCSVLine(message," ")
 		end
         command_complete()
+		
 	end
 end
 
