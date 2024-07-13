@@ -299,7 +299,7 @@ while true do
 			item_RS_request(command_split[3],tonumber(command_split[4]),tonumber(command_split[5]))
 		elseif command == "dump " then
 			dump()
-		elseif command = "lua  " then
+		elseif command == "lua  " then
 			item_info = ParseCSVLine(message," ")
 		end
         command_complete()
