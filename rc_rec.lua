@@ -139,12 +139,12 @@ while true do
 							turtle.dig()
 						end
 						fx = nil
-						while ~fx do
+						while fx == nil do
 							fx, fy, fz = gps.locate()
 						end
 						turtle.back()
 						cx = nil
-						while ~cx do
+						while cx == nil do
 							cx, cy, cz = gps.locate()
 						end
 						direction = 0
