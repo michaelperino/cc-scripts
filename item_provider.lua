@@ -16,7 +16,7 @@ while true do
             print(item_stor.amount)
             storage.craftItem({name=item_req.name,count=num_req})
             v,a = storage.exportItem({name=item_req.name,count=num_req},"up")
-            rednet.broadcast(string.format("%04d %04d", s, v))
+            rednet.broadcast(string.format("%04d %04d", s, v),"item_ready")
             s1,m1,p1 = rednet.receive("dump_stop",6.5)
             redstone.setOutput("top",false)
             sleep(0.1)

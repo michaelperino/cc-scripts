@@ -65,13 +65,13 @@ function item_RS_request(item, amount, slotty)
     --rednet.open("right")
     rednet.broadcast(request)
     while reccy ~= os.computerID() do
-		rednet.broadcast(request)
-        s,m = rednet.receive(2+math.random(10,100)/1000)
+		--rednet.broadcast(request)
+        s,m = rednet.receive("item_ready",2+math.random(10,100)/1000)
         if s == nil then
-            --rednet.broadcast(request)
+            rednet.broadcast(request)
 		elseif p == "dump_stop" then
             sleep(math.random(110,200)/1000)
-            --rednet.broadcast(request)
+            rednet.broadcast(request)
         else
             print(m)
             reccy = tonumber(string.sub(m,1,5))
@@ -178,9 +178,9 @@ function traverse(gx,gy,gz,gd)
     turtle.up()
     turtle.up()
     turtle.up()
-    rednet.send(height_ID,"SEY PLEASE","printer")
+    rednet.send(height_ID,"SEY PLEASE","printer_y")
     y_val = math.random(1,15)
-    s,m,p = rednet.receive(2)
+    s,m,p = rednet.receive("printer_y",2)
     if s ~= nil then
         if tonumber(m) ~= nil then
             y_val = tonumber(m)
@@ -221,7 +221,7 @@ function traverse(gx,gy,gz,gd)
                 s,d = turtle.inspect()
             else
                 while not turtle.forward() do
-                    turtle.dig()
+                    dig()
                 end
                 fx = nil
                 while not fx do
@@ -290,28 +290,31 @@ function traverse(gx,gy,gz,gd)
         curr = 0
         if axis == "X" or axis == "Z" then
             while curr < dist do
-                if dig_enabled then
-                    dig()
-                end
                 if turtle.forward() then
                     curr = curr + 1
+                else
+                    if dig_enabled then
+                        dig()
+                    end
                 end
             end
         elseif axis == "Y" then
             while curr < dist do
                 if target > cy then
-                    if dig_enabled then
-                        digUp()
-                    end
                     if turtle.up() then
                         curr = curr + 1
+                    else
+                        if dig_enabled then
+                            digUp()
+                        end
                     end
                 else
-                    if dig_enabled then
-                        digDown()
-                    end
                     if turtle.down() then
                         curr = curr + 1
+                    else
+                        if dig_enabled then
+                            digDown()
+                        end
                     end
                 end
             end
