@@ -15,17 +15,21 @@ if h ~= nil then
 end
 
 function item_RS_request(item, amount, slotty)
-    turtle.select(14)
-    turtle.digUp()
-    turtle.equipRight()
-    request = string.format("%04d %s",amount,item)
+    --turtle.select(14)
+    --turtle.digUp()
+    --turtle.equipRight()
+    request = string.format("ITEM %04d %s",amount,item)
     print(request)
     reccy = -1
-    rednet.open("right")
+    --rednet.open("right")
     rednet.broadcast(request)
     while reccy ~= os.computerID() do
-        s,m = rednet.receive(7.8)
+		--rednet.broadcast(request)
+        s,m = rednet.receive("item_ready",2+math.random(10,100)/1000)
         if s == nil then
+            rednet.broadcast(request)
+		elseif p == "dump_stop" then
+            sleep(math.random(110,200)/1000)
             rednet.broadcast(request)
         else
             print(m)
@@ -33,20 +37,25 @@ function item_RS_request(item, amount, slotty)
         end
     end
     turtle.select(16)
-    turtle.placeUp()
-    i = 12
-    while i > 2 do
-      turtle.select(i)
-      turtle.dropUp(64)
-      i = i - 1
+    while not turtle.placeUp() do
+        digUp()
+    end
+    for i = 10,3 do
+        if turtle.getItemCount(i) > 1 then
+            while i > 2 do
+            turtle.select(i)
+            turtle.dropUp(64)
+            end
+        end
     end
     turtle.select(slotty)
     turtle.dropUp(64)
     turtle.suckUp(64)
     rednet.broadcast("END","dump_stop")
-    turtle.select(14)
-    turtle.equipRight()
+    --turtle.select(14)
+    --turtle.equipRight()
     turtle.select(16)
+    turtle.dropUp(64)
     turtle.digUp()
     turtle.select(slotty)
 end
