@@ -58,12 +58,13 @@ function item_RS_request(item, amount, slotty)
     --rednet.open("right")
     rednet.broadcast(request)
     while reccy ~= os.computerID() do
-        s,m,p = rednet.receive(7.8)
+		rednet.broadcast(request)
+        s,m = rednet.receive(7.8)
         if s == nil then
-            rednet.broadcast(request)
-        elseif p == "dump_stop" then
+            --rednet.broadcast(request)
+		elseif p == "dump_stop" then
             sleep(0.6)
-            rednet.broadcast(request)
+            --rednet.broadcast(request)
         else
             print(m)
             reccy = tonumber(string.sub(m,1,5))
