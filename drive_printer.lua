@@ -72,7 +72,7 @@ while true do
 		if comm == "DAT" then
 			data = ParseCSVLine(m)
 			reply = ""
-			for i = 0,15 do
+			for i = 0,18 do
 				print(data[4]-oz+1,data[2]-ox+1+i)
 				if data_array[data[2]-ox+1] == nil then
 					break

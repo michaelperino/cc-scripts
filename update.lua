@@ -19,7 +19,7 @@ if program == "all" then
         if local_up ~= nil then
             rednet.open("left")
             sleep(math.random(50,500)/100)
-            rednet.broadcast(program,"program_update")
+            rednet.broadcast(k,"program_update")
             s,m = rednet.receive("program_file",10)
             if m ~= nil then   
                 shell.run("delete "..k)

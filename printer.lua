@@ -1,6 +1,7 @@
 local args = {...}
 offset_x_chunk = args[1]
 offset_z_chunk = args[2]
+chunk_size = 8
 
 base_ID = 10
 
@@ -96,11 +97,39 @@ function refuel()
     end
 end
 
+function unstuck(depth)
+    reverse = {turtle.back = turtle.forward, turtle.forward = turtle.back, turtle.turnLeft = turtle.turnRight, turtle.turnRight = turtle.turnLeft, turtle.up = turtle.down, turtle.down = turtle.up}
+    i = math.random(1,6)
+    i1 = 1
+    first = nil
+    second = nil
+    for k,v in pairs(reverse)
+        if i1 == i then
+            first = k
+            second = v
+        end
+        i1 = i1 + 1
+    end
+    if first ~= nil then
+        if first() then
+            while ~second() do
+                rednet.broadcast("STUCK!!")
+                if depth < 20 then
+                    unstuck(depth+1)
+                end
+            end
+        end
+    end
+end
+    
+
 function dig()
     success, block = turtle.inspect()
     if block.name ~= "computercraft:turtle_advanced" and block.name ~= "computercraft:turtle_normal" then
         turtle.dig()
         turtle.attack()
+    else
+        unstuck(0)
     end
     refuel()
 end
@@ -110,6 +139,8 @@ function digUp()
     if block.name ~= "computercraft:turtle_advanced" and block.name ~= "computercraft:turtle_normal" then
         turtle.digUp()
         turtle.attack()
+    else
+        unstuck(0)
     end
     refuel()
 end
@@ -119,6 +150,8 @@ function digDown()
     if block.name ~= "computercraft:turtle_advanced" and block.name ~= "computercraft:turtle_normal" then
         turtle.digDown()
         turtle.attack()
+    else
+        unstuck(0)
     end
     refuel()
 end
@@ -175,9 +208,15 @@ function traverse(gx,gy,gz,gd)
                 while not turtle.forward() do
                     turtle.dig()
                 end
-                fx, fy, fz = gps.locate()
+                fx = nil
+                while ~fx do
+                    fx, fy, fz = gps.locate()
+                end
                 turtle.back()
-                cx, cy, cz = gps.locate()
+                cx = nil
+                while ~cx do
+                    cx, cy, cz = gps.locate()
+                end
                 direction = 0
                 if fx > cx then
                     direction = 1
@@ -278,8 +317,8 @@ oz = tonumber(data[3])
 od = tonumber(data[4])
 slot = 1
 m = nil
-z_size = 15
-x_size = 15
+z_size = chunk_size
+x_size = chunk_size
 for curr_z_offset = 0,z_size do
     print(string.format("TRAVERSE %d %d %d %d\n",ox+offset_x_chunk*16,oy,oz+offset_z_chunk*16+curr_z_offset,od))
     traverse(ox+offset_x_chunk*16,oy,oz+offset_z_chunk*16+curr_z_offset,od)
