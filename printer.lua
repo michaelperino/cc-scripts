@@ -215,12 +215,12 @@ function traverse(gx,gy,gz,gd)
                     turtle.dig()
                 end
                 fx = nil
-                while ~fx do
+                while not fx do
                     fx, fy, fz = gps.locate()
                 end
                 turtle.back()
                 cx = nil
-                while ~cx do
+                while not cx do
                     cx, cy, cz = gps.locate()
                 end
                 direction = 0

@@ -123,7 +123,7 @@ function digUp()
 end
 
 function digDown()
-    success, block = turtle.digDown()
+    success, block = turtle.inspectDown()
     if block.name ~= "computercraft:turtle_advanced" and block.name ~= "computercraft:turtle_normal" then
         turtle.digDown()
         turtle.attack()
