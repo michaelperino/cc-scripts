@@ -181,6 +181,14 @@ function traverse(gx,gy,gz,gd)
     turtle.up()
     turtle.up()
     turtle.up()
+    rednet.broadcast("SEY PLEASE","printer")
+    y_val = math.random(1,15)
+    s,m,p = rednet.receive(2)
+    if s ~= nil then
+        if tonumber(m) ~= nil then
+            y_val = tonumber(m)
+        end
+    end
     for count = 1,4 do
         if turtle.forward() then
             fx = nil
@@ -242,7 +250,7 @@ function traverse(gx,gy,gz,gd)
         end
     end
     order = {"Y1","X","Z","Y2","D"}
-    axes = {X=gx,Y1=78+math.random(0,10),Y2=gy,Z=gz,D=gd}
+    axes = {X=gx,Y1=78+y_val,Y2=gy,Z=gz,D=gd}
     for curr_axis = 1,5 do
         cx, cy, cz = gps.locate()
         axis = string.sub(string.upper(order[curr_axis]),1,1)
@@ -313,6 +321,7 @@ function traverse(gx,gy,gz,gd)
         end
         print(direction,curr,cx,cy,cz)
     end
+    rednet.broadcast("REY PLEASE","printer")
 end
 
 m = nil

@@ -58,6 +58,13 @@ while line ~= nil do
 	line = h.readLine()
 end
 
+valid_Ys = {}
+turtle_Ys = {}
+for i = 0,100 do
+	valid_Ys[i] = i
+end
+
+
 while true do
     local event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
 	print(side,channel,replyChannel,message.sProtocol,message.message,distance)
@@ -80,6 +87,29 @@ while true do
 				reply = reply..tostring(data_array[data[4]-oz+1][data[2]-ox+1+i])..","
 			end
 			rednet.send(s,reply,"printer")
+		end
+		if comm == "SEY" then
+			minny = 128
+			keyny = nil
+			for key,val in pairs(valid_Ys) do
+				if minny < val then
+					minny = val
+					keyny = key
+				end
+			end
+			if keyny ~= nil then
+				valid_Ys[keyny] = nil
+			else
+				minny = math.random(1,20)
+			end
+			turtle_Ys[s] = minny
+			rednet.send(s,string.format("%6d",minny),"printer")
+		end
+		if comm == "REY" then
+			if turtle_Ys[s] ~= nil then
+				valid_Ys[turtle_Ys[s]] = turtle_Ys[s]
+				turtle_Ys[s] = nil
+			end
 		end
 	end
 end
