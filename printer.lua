@@ -250,7 +250,10 @@ function traverse(gx,gy,gz,gd)
     order = {"Y1","X","Z","Y2","D"}
     axes = {X=gx,Y1=78+y_val,Y2=gy,Z=gz,D=gd}
     for curr_axis = 1,5 do
-        cx, cy, cz = gps.locate()
+        cx = nil
+        while cx == nil do
+            cx, cy, cz = gps.locate()
+        end
         axis = string.sub(string.upper(order[curr_axis]),1,1)
         target = tonumber(axes[order[curr_axis]])
         targetdir = direction
