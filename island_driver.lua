@@ -1,7 +1,6 @@
 curr_chunk_x = 0
 curr_chunk_z = 16
-z_rollover = 0
-z_max = 32
+max_z = 32
 max_x = 16
 rednet.open("left")
 f = fs.open("LOG_FILE","a")
@@ -19,10 +18,9 @@ end
 num_turtles = i
 print(num_turtles)
 all_chunks = {}
-num_chunks = max_x * max_z
 for i = curr_chunk_x,max_x do
     for j = curr_chunk_z,max_z do
-        table.insert(all_chunks,{x=curr_chunk_x,z=curr_chunk_z})
+        table.insert(all_chunks,{x=i,z=j})
     end
 end
 for i = #all_chunks, 2, -1 do
@@ -40,7 +38,7 @@ for i = 1,num_turtles do
     f.flush()
     sleep(0.5)
 end
-while chunk_idx <= num_chunks do
+while chunk_idx <= #all_chunks do
     s,m = rednet.receive("command_complete")
     f.write(string.format("Comm Complete %d",s))
     sleep(0.1)
