@@ -114,28 +114,6 @@ function unstuck(depth)
             sleep(math.random(50,200)/100)
         end
     end
-    --[[reverse = {[turtle.back] = turtle.forward, [turtle.forward] = turtle.back, [turtle.turnLeft] = turtle.turnRight, [turtle.turnRight] = turtle.turnLeft, [turtle.up] = turtle.down, [turtle.down] = turtle.up}
-    i = math.random(1,6)
-    i1 = 1
-    first = nil
-    second = nil
-    for k,v in pairs(reverse) do
-        if i1 == i then
-            first = k
-            second = v
-        end
-        i1 = i1 + 1
-    end
-    if first ~= nil then
-        if first() then
-            while not second() do
-                rednet.broadcast("STUCK!!")
-                if depth < 20 then
-                    unstuck(depth+1)
-                end
-            end
-        end
-    end]]--
 end
     
 
