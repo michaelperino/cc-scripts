@@ -14,6 +14,39 @@ if h ~= nil then
     turtle.equipRight()
 end
 
+function dig()
+    success, block = turtle.inspect()
+    if block.name ~= "computercraft:turtle_advanced" and block.name ~= "computercraft:turtle_normal" then
+        turtle.dig()
+        turtle.attack()
+    else
+        unstuck(0)
+    end
+    refuel()
+end
+
+function digUp()
+    success, block = turtle.inspectUp()
+    if block.name ~= "computercraft:turtle_advanced" and block.name ~= "computercraft:turtle_normal" then
+        turtle.digUp()
+        turtle.attack()
+    else
+        unstuck(0)
+    end
+    refuel()
+end
+
+function digDown()
+    success, block = turtle.inspectDown()
+    if block.name ~= "computercraft:turtle_advanced" and block.name ~= "computercraft:turtle_normal" then
+        turtle.digDown()
+        turtle.attack()
+    else
+        unstuck(0)
+    end
+    refuel()
+end
+
 function item_RS_request(item, amount, slotty)
     --turtle.select(14)
     --turtle.digUp()
