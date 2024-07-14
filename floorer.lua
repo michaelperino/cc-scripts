@@ -119,8 +119,8 @@ while w > 0 do
       d2 = d2 - 1
       if d2 > 0 then
           if dig then
-              turtle.dig()
-              turtle.digUp()
+              dig()
+              digUp()
           end
           turtle.forward()
       end
@@ -129,7 +129,7 @@ while w > 0 do
   if turn == "right" then
       turtle.turnRight()
       if dig then
-          turtle.dig()
+          dig()
           turtle.digUp()
       end
       turtle.forward()
@@ -138,7 +138,7 @@ while w > 0 do
   else
       turtle.turnLeft()
       if dig then
-          turtle.dig()
+          dig()
           turtle.digUp()
       end
       turtle.forward()
