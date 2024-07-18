@@ -373,6 +373,8 @@ for curr_z_offset = 0,(z_size-1) do
                 while turtle.up() == false do
                     digUp()
                 end
+                if curr_y > 24 then
+                    curr_slot = 1
                 if curr_y < 18 then
                     curr_slot = 2
                 else
@@ -385,7 +387,7 @@ for curr_z_offset = 0,(z_size-1) do
             if curr_y >= 24 then
                 curr_slot = 1
             else
-                curr_slot = 2
+                curr_slot = 3
             end
             placeDown(curr_slot)
         --end
