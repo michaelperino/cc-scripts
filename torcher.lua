@@ -354,7 +354,8 @@ for curr_z_offset = 0,256,7 do
         while turtle.down() do
             turtle.down()
         end
-        placeDown()
+        turtle.up()
+        placeDown(1)
         traverse(curr_x_offset+ox,85,curr_z_offset+oz,1)
     end
 end

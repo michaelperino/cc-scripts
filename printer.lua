@@ -161,6 +161,7 @@ end
 items = {}
 items[1] = "minecraft:dirt"
 items[2] = "minecraft:cobblestone"
+items[3] = "minecraft:sand"
 
 function placeDown(slotty)
     if turtle.getItemCount(slotty) < 4 then
@@ -365,17 +366,28 @@ for curr_z_offset = 0,(z_size-1) do
             end
             curr_y = curr_y - 1
         end
+        curr_slot = 1
         --if target >= 0 then
             print(target,type(target),curr_y,type(curr_y))
             while target > curr_y do
                 while turtle.up() == false do
                     digUp()
                 end
-                placeDown(2)
+                if curr_y < 18 then
+                    curr_slot = 2
+                else
+                    curr_slot = 3
+                end
+                placeDown(curr_slot)
                 curr_y = curr_y + 1
             end
             turtle.digDown()
-            placeDown(1)
+            if curr_y >= 24 then
+                curr_slot = 1
+            else
+                curr_slot = 2
+            end
+            placeDown(curr_slot)
         --end
         if curr_x_offset < (x_size-1) then
                 while turtle.forward() == false do
