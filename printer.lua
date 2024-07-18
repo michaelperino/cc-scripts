@@ -170,7 +170,7 @@ function placeDown(slotty)
     turtle.select(slotty)
     turtle.placeDown()
     s,d = turtle.inspectDown()
-    while not s or d.name ~= items[slotty] then
+    while not s or d.name ~= items[slotty] do
         digDown()
         item_RS_request(items[slotty],62-turtle.getItemCount(slotty),slotty)
         turtle.placeDown()
