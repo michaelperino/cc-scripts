@@ -169,6 +169,13 @@ function placeDown(slotty)
     end
     turtle.select(slotty)
     turtle.placeDown()
+    s,d = turtle.inspectDown()
+    while not s or d.name ~= items[slotty] then
+        digDown()
+        item_RS_request(items[slotty],62-turtle.getItemCount(slotty),slotty)
+        turtle.placeDown()
+        s,d = turtle.inspectDown()
+    end
 end
 
 
@@ -375,7 +382,7 @@ for curr_z_offset = 0,(z_size-1) do
                 end
                 if curr_y > 24 then
                     curr_slot = 1
-                if curr_y < 18 then
+                elseif curr_y < 18 then
                     curr_slot = 2
                 else
                     curr_slot = 3
